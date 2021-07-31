@@ -1,0 +1,22 @@
+name: test
+
+on: [push]
+
+jobs:
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install NVM
+        run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+      - name: Activate NVM
+        run: export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" --no-use
+      - name: Install node.js
+        env:
+          NODE_VERSION: 14.17.0
+        run: nvm install
+      - name: Install dependencies
+        run: npm install
+      - name: Lint source code with ESLint
+        run: npm run eslint
